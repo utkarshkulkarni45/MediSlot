@@ -1,6 +1,17 @@
 # MediSlot - Healthcare Slot Booking Platform
 
-MediSlot is a Spring Boot 3 REST backend that allows patients to book appointment slots with doctors. It addresses the real-world race condition problem where simultaneous booking requests could result in double-booking.
+MediSlot is a Spring Boot 3 REST backend with a clinic day sheet frontend that allows patients to book appointment slots with doctors. It addresses the real-world race condition problem where simultaneous booking requests could result in double-booking.
+
+---
+
+## 🌐 Live Demo & Deployment Links
+
+- **Live Application:** [https://medislot101.netlify.app/](https://medislot101.netlify.app/)
+- **Backend API (Render):** [https://medislot-api-guw0.onrender.com](https://medislot-api-guw0.onrender.com)
+- **Database:** Managed MySQL on Aiven Cloud
+
+> **Note on Free-Tier Hosting:**  
+> The backend is hosted on Render's free tier, which automatically spins down after 15 minutes of inactivity. **The very first request may take up to 60 seconds** while the container wakes up. Subsequent requests respond instantly!
 
 ---
 
