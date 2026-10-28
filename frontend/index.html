@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MediSlot - Clinic Day Sheet</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>MediSlot Day Sheet</h1>
+      <p class="subtitle">Appointment booking ledger with pessimistic lock concurrency</p>
+    </header>
+
+    <!-- Global Notice (wake up warning for free hosting) -->
+    <div id="connectionNotice" class="notice-box">
+      Connecting to the server. The first request can take up to a minute if the server is waking up.
+    </div>
+
+    <!-- Top Tabs -->
+    <nav class="tabs">
+      <button id="tabBook" class="tab-btn active" type="button">Book appointment</button>
+      <button id="tabMyAppointments" class="tab-btn" type="button">My appointments</button>
+    </nav>
+
+    <!-- TAB 1: BOOKING VIEW -->
+    <main id="bookSection">
+      <div class="ledger-layout">
+        <!-- Left: Filters & Doctor Selection -->
+        <aside class="sidebar-panel">
+          <h2 class="panel-title">Filter ledger</h2>
+
+          <div class="form-group">
+            <label for="doctorSelect">Select doctor</label>
+            <select id="doctorSelect" class="form-control">
+              <option value="">Loading doctors...</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="dateInput">Select date</label>
+            <input type="date" id="dateInput" class="form-control">
+          </div>
+
+          <button id="btnLoadSlots" class="action-btn" type="button" style="width: 100%;">View slots</button>
+        </aside>
+
+        <!-- Right: Day Sheet Ledger -->
+        <section class="day-sheet">
+          <div class="day-sheet-header">
+            <span id="ledgerHeaderTitle">Available slots</span>
+            <span id="slotCountLabel" style="font-weight: 400; font-size: 0.9rem;"></span>
+          </div>
+
+          <div id="bookingAlertBox"></div>
+
+          <ul id="slotRowsList" class="sheet-rows">
+            <li class="empty-state">Select a doctor and date to view available appointment slots.</li>
+          </ul>
+        </section>
+      </div>
+    </main>
+
+    <!-- TAB 2: MY APPOINTMENTS VIEW -->
+    <section id="myAppointmentsSection" style="display: none;">
+      <div class="sidebar-panel" style="max-width: 600px; margin-bottom: 1.5rem;">
+        <h2 class="panel-title">Look up patient history</h2>
+        <div class="form-group">
+          <label for="patientLookupId">Patient ID</label>
+          <input type="number" id="patientLookupId" class="form-control" placeholder="e.g. 1">
+        </div>
+        <button id="btnLookupAppointments" class="action-btn" type="button">Find appointments</button>
+      </div>
+
+      <div id="myAppointmentsAlertBox"></div>
+
+      <div class="day-sheet">
+        <div class="day-sheet-header">
+          <span>Patient appointment records</span>
+        </div>
+        <ul id="appointmentsList" class="sheet-rows">
+          <li class="empty-state">Enter a patient ID above to view booked visits.</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
+

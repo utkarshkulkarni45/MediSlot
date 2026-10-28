@@ -21,7 +21,8 @@
 - Branch per feature if possible
 
 ## Do Not Add
-Microservices, Kafka, Redis, JWT/OAuth, frontend, Docker orchestration.
+Microservices, Kafka, Redis, JWT/OAuth, complex frontend frameworks (React/Vue/Angular), Docker orchestration.
+(Plain static HTML/CSS/JS frontend is permitted for visual demonstration).
 
 ## Definition of Done (per feature)
 - Code compiles and follows the rules above

@@ -34,7 +34,7 @@
 ## Finish
 - [x] README (setup, APIs, sample requests, design decisions, limitations)
 - [x] Postman collection or curl examples
-- [ ] Final cleanup and push to GitHub
+- [x] Final cleanup and push to GitHub
 
 ## Notes / Decisions Log
 - 2026-10-28: Initialized project with Java 17 / Spring Boot 3.2.5.

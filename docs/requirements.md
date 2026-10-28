@@ -25,6 +25,7 @@ Java 17, Spring Boot 3, Spring Data JPA, MySQL (H2 for tests), Maven, Lombok, Be
 - Correct under concurrent requests (verified by a test)
 - Consistent JSON error responses
 - DTOs only in API (no entities exposed)
+- Plain static frontend (HTML/CSS/JS) for interactive demonstration
 - Readable code, README with setup and sample requests
 
 ## Acceptance Criteria

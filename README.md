@@ -222,3 +222,4 @@ mvn clean test
 | `SlotGeneratorServiceTest` | Interval slicing & edge cases | Divisibility, past-slot removal, fully-booked day, grid alignment |
 | `BookingIntegrationTest` | Service lifecycle | Booking, synchronous double-booking block, cancellation, and rebooking |
 | `ConcurrencyBookingTest` | Parallel race conditions | 10 parallel threads hit the same slot via `ExecutorService` -> exactly 1 succeeds, 9 fail |
+
