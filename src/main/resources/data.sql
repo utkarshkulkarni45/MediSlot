@@ -1,58 +1,182 @@
--- Seed Doctors
-INSERT INTO doctors (id, name, specialization, consultation_minutes)
-VALUES (1, 'Dr. Sarah Adams', 'Cardiology', 30)
-ON DUPLICATE KEY UPDATE name=name;
+-- ==========================================================
+-- 50 DUMMY DOCTORS ACROSS MULTIPLE SPECIALIZATIONS
+-- ==========================================================
+INSERT INTO doctors (id, name, specialization, consultation_minutes) VALUES
+(1, 'Dr. Sarah Adams', 'Cardiology', 30),
+(2, 'Dr. Robert Chen', 'Dermatology', 15),
+(3, 'Dr. Elena Patel', 'General Medicine', 20),
+(4, 'Dr. Marcus Vance', 'Orthopedics', 30),
+(5, 'Dr. Priya Sharma', 'Pediatrics', 15),
+(6, 'Dr. David Kim', 'Neurology', 45),
+(7, 'Dr. Rachel Green', 'Gynecology', 20),
+(8, 'Dr. James Wilson', 'Oncology', 30),
+(9, 'Dr. Anita Desai', 'Endocrinology', 20),
+(10, 'Dr. Thomas Hayes', 'Psychiatry', 45),
+(11, 'Dr. Emily Watson', 'Ophthalmology', 15),
+(12, 'Dr. Sanjay Gupta', 'Cardiology', 30),
+(13, 'Dr. Lisa Cuddy', 'Endocrinology', 20),
+(14, 'Dr. Gregory House', 'Diagnostics', 45),
+(15, 'Dr. Allison Cameron', 'Immunology', 30),
+(16, 'Dr. Robert Chase', 'Surgery', 30),
+(17, 'Dr. Eric Foreman', 'Neurology', 30),
+(18, 'Dr. Chris Turk', 'Orthopedics', 30),
+(19, 'Dr. John Dorian', 'General Medicine', 15),
+(20, 'Dr. Elliot Reid', 'Endocrinology', 20),
+(21, 'Dr. Perry Cox', 'Cardiology', 30),
+(22, 'Dr. Derek Shepherd', 'Neurosurgery', 45),
+(23, 'Dr. Meredith Grey', 'General Surgery', 30),
+(24, 'Dr. Cristina Yang', 'Cardiology', 30),
+(25, 'Dr. Alex Karev', 'Pediatrics', 20),
+(26, 'Dr. Miranda Bailey', 'General Surgery', 30),
+(27, 'Dr. Richard Webber', 'General Medicine', 30),
+(28, 'Dr. Arizona Robbins', 'Pediatric Surgery', 30),
+(29, 'Dr. Callie Torres', 'Orthopedics', 30),
+(30, 'Dr. Mark Sloan', 'Plastic Surgery', 30),
+(31, 'Dr. Lexie Grey', 'Neurology', 30),
+(32, 'Dr. Owen Hunt', 'Trauma Surgery', 30),
+(33, 'Dr. Teddy Altman', 'Cardiology', 30),
+(34, 'Dr. Jackson Avery', 'ENT', 20),
+(35, 'Dr. April Kepner', 'Trauma Surgery', 20),
+(36, 'Dr. Jo Wilson', 'Gynecology', 20),
+(37, 'Dr. Andrew DeLuca', 'General Medicine', 20),
+(38, 'Dr. Maggie Pierce', 'Cardiology', 30),
+(39, 'Dr. Amelia Shepherd', 'Neurosurgery', 45),
+(40, 'Dr. Atticus Lincoln', 'Orthopedics', 30),
+(41, 'Dr. Levi Schmitt', 'General Medicine', 15),
+(42, 'Dr. Cormac Hayes', 'Pediatrics', 20),
+(43, 'Dr. Winston Ndugu', 'Cardiology', 30),
+(44, 'Dr. Nick Marsh', 'Transplant Surgery', 45),
+(45, 'Dr. Shaun Murphy', 'Diagnostics', 30),
+(46, 'Dr. Aaron Glassman', 'Neurosurgery', 45),
+(47, 'Dr. Claire Browne', 'General Surgery', 30),
+(48, 'Dr. Neil Melendez', 'Cardiology', 30),
+(49, 'Dr. Audrey Lim', 'Trauma Surgery', 30),
+(50, 'Dr. Morgan Reznick', 'Internal Medicine', 20)
+ON DUPLICATE KEY UPDATE name=VALUES(name), specialization=VALUES(specialization), consultation_minutes=VALUES(consultation_minutes);
 
-INSERT INTO doctors (id, name, specialization, consultation_minutes)
-VALUES (2, 'Dr. Robert Chen', 'Dermatology', 15)
-ON DUPLICATE KEY UPDATE name=name;
+-- ==========================================================
+-- SCHEDULES FOR ALL 50 DOCTORS (COVERING MONDAY THROUGH FRIDAY)
+-- ==========================================================
+INSERT INTO doctor_schedules (id, doctor_id, day_of_week, start_time, end_time) VALUES
+-- Doctor 1 - 10
+(1, 1, 'MONDAY', '09:00:00', '13:00:00'),
+(2, 1, 'WEDNESDAY', '09:00:00', '13:00:00'),
+(3, 1, 'FRIDAY', '09:00:00', '13:00:00'),
+(4, 2, 'TUESDAY', '14:00:00', '17:00:00'),
+(5, 2, 'THURSDAY', '14:00:00', '17:00:00'),
+(6, 3, 'MONDAY', '10:00:00', '14:00:00'),
+(7, 3, 'TUESDAY', '10:00:00', '14:00:00'),
+(8, 3, 'WEDNESDAY', '10:00:00', '14:00:00'),
+(9, 3, 'THURSDAY', '10:00:00', '14:00:00'),
+(10, 3, 'FRIDAY', '10:00:00', '14:00:00'),
+(11, 4, 'MONDAY', '08:30:00', '12:30:00'),
+(12, 4, 'WEDNESDAY', '08:30:00', '12:30:00'),
+(13, 5, 'TUESDAY', '09:00:00', '13:00:00'),
+(14, 5, 'FRIDAY', '09:00:00', '13:00:00'),
+(15, 6, 'MONDAY', '11:00:00', '16:00:00'),
+(16, 6, 'THURSDAY', '11:00:00', '16:00:00'),
+(17, 7, 'WEDNESDAY', '10:00:00', '15:00:00'),
+(18, 7, 'FRIDAY', '10:00:00', '15:00:00'),
+(19, 8, 'MONDAY', '09:00:00', '12:00:00'),
+(20, 8, 'THURSDAY', '09:00:00', '12:00:00'),
+(21, 9, 'TUESDAY', '13:00:00', '17:00:00'),
+(22, 9, 'WEDNESDAY', '13:00:00', '17:00:00'),
+(23, 10, 'MONDAY', '09:00:00', '14:00:00'),
+(24, 10, 'FRIDAY', '09:00:00', '14:00:00'),
 
-INSERT INTO doctors (id, name, specialization, consultation_minutes)
-VALUES (3, 'Dr. Elena Patel', 'General Medicine', 20)
-ON DUPLICATE KEY UPDATE name=name;
+-- Doctor 11 - 25
+(25, 11, 'MONDAY', '09:00:00', '13:00:00'),
+(26, 11, 'WEDNESDAY', '09:00:00', '13:00:00'),
+(27, 12, 'TUESDAY', '10:00:00', '14:00:00'),
+(28, 12, 'THURSDAY', '10:00:00', '14:00:00'),
+(29, 13, 'MONDAY', '14:00:00', '18:00:00'),
+(30, 13, 'WEDNESDAY', '14:00:00', '18:00:00'),
+(31, 14, 'TUESDAY', '09:00:00', '13:00:00'),
+(32, 14, 'FRIDAY', '09:00:00', '13:00:00'),
+(33, 15, 'MONDAY', '09:00:00', '12:00:00'),
+(34, 15, 'THURSDAY', '09:00:00', '12:00:00'),
+(35, 16, 'WEDNESDAY', '11:00:00', '15:00:00'),
+(36, 16, 'FRIDAY', '11:00:00', '15:00:00'),
+(37, 17, 'MONDAY', '10:00:00', '14:00:00'),
+(38, 17, 'TUESDAY', '10:00:00', '14:00:00'),
+(39, 18, 'WEDNESDAY', '08:00:00', '12:00:00'),
+(40, 18, 'THURSDAY', '08:00:00', '12:00:00'),
+(41, 19, 'MONDAY', '09:00:00', '13:00:00'),
+(42, 19, 'FRIDAY', '09:00:00', '13:00:00'),
+(43, 20, 'TUESDAY', '13:00:00', '17:00:00'),
+(44, 20, 'THURSDAY', '13:00:00', '17:00:00'),
+(45, 21, 'MONDAY', '09:00:00', '13:00:00'),
+(46, 21, 'WEDNESDAY', '09:00:00', '13:00:00'),
+(47, 22, 'TUESDAY', '10:00:00', '15:00:00'),
+(48, 22, 'THURSDAY', '10:00:00', '15:00:00'),
+(49, 23, 'MONDAY', '08:00:00', '12:00:00'),
+(50, 23, 'FRIDAY', '08:00:00', '12:00:00'),
+(51, 24, 'WEDNESDAY', '09:00:00', '13:00:00'),
+(52, 24, 'FRIDAY', '09:00:00', '13:00:00'),
+(53, 25, 'MONDAY', '10:00:00', '14:00:00'),
+(54, 25, 'THURSDAY', '10:00:00', '14:00:00'),
 
--- Seed Schedules (Monday through Friday)
--- Dr. Adams (Cardiology, 30m): Mon, Wed, Fri 09:00 - 13:00
-INSERT INTO doctor_schedules (id, doctor_id, day_of_week, start_time, end_time)
-VALUES (1, 1, 'MONDAY', '09:00:00', '13:00:00')
-ON DUPLICATE KEY UPDATE start_time=start_time;
+-- Doctor 26 - 50
+(55, 26, 'TUESDAY', '09:00:00', '13:00:00'),
+(56, 26, 'WEDNESDAY', '09:00:00', '13:00:00'),
+(57, 27, 'MONDAY', '09:00:00', '14:00:00'),
+(58, 27, 'FRIDAY', '09:00:00', '14:00:00'),
+(59, 28, 'TUESDAY', '08:30:00', '12:30:00'),
+(60, 28, 'THURSDAY', '08:30:00', '12:30:00'),
+(61, 29, 'MONDAY', '13:00:00', '17:00:00'),
+(62, 29, 'WEDNESDAY', '13:00:00', '17:00:00'),
+(63, 30, 'TUESDAY', '14:00:00', '18:00:00'),
+(64, 30, 'FRIDAY', '14:00:00', '18:00:00'),
+(65, 31, 'MONDAY', '10:00:00', '14:00:00'),
+(66, 31, 'THURSDAY', '10:00:00', '14:00:00'),
+(67, 32, 'WEDNESDAY', '08:00:00', '12:00:00'),
+(68, 32, 'FRIDAY', '08:00:00', '12:00:00'),
+(69, 33, 'MONDAY', '09:00:00', '13:00:00'),
+(70, 33, 'TUESDAY', '09:00:00', '13:00:00'),
+(71, 34, 'THURSDAY', '11:00:00', '15:00:00'),
+(72, 34, 'FRIDAY', '11:00:00', '15:00:00'),
+(73, 35, 'MONDAY', '09:00:00', '13:00:00'),
+(74, 35, 'WEDNESDAY', '09:00:00', '13:00:00'),
+(75, 36, 'TUESDAY', '10:00:00', '14:00:00'),
+(76, 36, 'THURSDAY', '10:00:00', '14:00:00'),
+(77, 37, 'MONDAY', '13:00:00', '17:00:00'),
+(78, 37, 'FRIDAY', '13:00:00', '17:00:00'),
+(79, 38, 'WEDNESDAY', '09:00:00', '13:00:00'),
+(80, 38, 'THURSDAY', '09:00:00', '13:00:00'),
+(81, 39, 'TUESDAY', '10:00:00', '15:00:00'),
+(82, 39, 'FRIDAY', '10:00:00', '15:00:00'),
+(83, 40, 'MONDAY', '08:30:00', '12:30:00'),
+(84, 40, 'WEDNESDAY', '08:30:00', '12:30:00'),
+(85, 41, 'TUESDAY', '09:00:00', '13:00:00'),
+(86, 41, 'THURSDAY', '09:00:00', '13:00:00'),
+(87, 42, 'MONDAY', '10:00:00', '14:00:00'),
+(88, 42, 'FRIDAY', '10:00:00', '14:00:00'),
+(89, 43, 'WEDNESDAY', '09:00:00', '13:00:00'),
+(90, 43, 'THURSDAY', '09:00:00', '13:00:00'),
+(91, 44, 'TUESDAY', '11:00:00', '16:00:00'),
+(92, 44, 'FRIDAY', '11:00:00', '16:00:00'),
+(93, 45, 'MONDAY', '09:00:00', '13:00:00'),
+(94, 45, 'TUESDAY', '09:00:00', '13:00:00'),
+(95, 46, 'WEDNESDAY', '10:00:00', '15:00:00'),
+(96, 46, 'THURSDAY', '10:00:00', '15:00:00'),
+(97, 47, 'MONDAY', '08:00:00', '12:00:00'),
+(98, 47, 'FRIDAY', '08:00:00', '12:00:00'),
+(99, 48, 'TUESDAY', '09:00:00', '13:00:00'),
+(100, 48, 'WEDNESDAY', '09:00:00', '13:00:00'),
+(101, 49, 'THURSDAY', '13:00:00', '17:00:00'),
+(102, 49, 'FRIDAY', '13:00:00', '17:00:00'),
+(103, 50, 'MONDAY', '10:00:00', '14:00:00'),
+(104, 50, 'WEDNESDAY', '10:00:00', '14:00:00'),
+(105, 50, 'FRIDAY', '10:00:00', '14:00:00')
+ON DUPLICATE KEY UPDATE start_time=VALUES(start_time), end_time=VALUES(end_time);
 
-INSERT INTO doctor_schedules (id, doctor_id, day_of_week, start_time, end_time)
-VALUES (2, 1, 'WEDNESDAY', '09:00:00', '13:00:00')
-ON DUPLICATE KEY UPDATE start_time=start_time;
-
-INSERT INTO doctor_schedules (id, doctor_id, day_of_week, start_time, end_time)
-VALUES (3, 1, 'FRIDAY', '09:00:00', '13:00:00')
-ON DUPLICATE KEY UPDATE start_time=start_time;
-
--- Dr. Chen (Dermatology, 15m): Tue, Thu 14:00 - 17:00
-INSERT INTO doctor_schedules (id, doctor_id, day_of_week, start_time, end_time)
-VALUES (4, 2, 'TUESDAY', '14:00:00', '17:00:00')
-ON DUPLICATE KEY UPDATE start_time=start_time;
-
-INSERT INTO doctor_schedules (id, doctor_id, day_of_week, start_time, end_time)
-VALUES (5, 2, 'THURSDAY', '14:00:00', '17:00:00')
-ON DUPLICATE KEY UPDATE start_time=start_time;
-
--- Dr. Patel (General Medicine, 20m): Mon to Fri 10:00 - 14:00
-INSERT INTO doctor_schedules (id, doctor_id, day_of_week, start_time, end_time)
-VALUES (6, 3, 'MONDAY', '10:00:00', '14:00:00')
-ON DUPLICATE KEY UPDATE start_time=start_time;
-
-INSERT INTO doctor_schedules (id, doctor_id, day_of_week, start_time, end_time)
-VALUES (7, 3, 'TUESDAY', '10:00:00', '14:00:00')
-ON DUPLICATE KEY UPDATE start_time=start_time;
-
-INSERT INTO doctor_schedules (id, doctor_id, day_of_week, start_time, end_time)
-VALUES (8, 3, 'WEDNESDAY', '10:00:00', '14:00:00')
-ON DUPLICATE KEY UPDATE start_time=start_time;
-
--- Seed Patients for immediate testing
-INSERT INTO patients (id, name, phone, email)
-VALUES (1, 'Alice Smith', '555-0101', 'alice.smith@example.com')
-ON DUPLICATE KEY UPDATE name=name;
-
-INSERT INTO patients (id, name, phone, email)
-VALUES (2, 'Bob Johnson', '555-0102', 'bob.johnson@example.com')
-ON DUPLICATE KEY UPDATE name=name;
-
+-- ==========================================================
+-- DEFAULT TEST PATIENTS
+-- ==========================================================
+INSERT INTO patients (id, name, phone, email) VALUES
+(1, 'Alice Smith', '555-0101', 'alice.smith@example.com'),
+(2, 'Bob Johnson', '555-0102', 'bob.johnson@example.com'),
+(3, 'Charlie Brown', '555-0103', 'charlie.brown@example.com'),
+(4, 'Diana Prince', '555-0104', 'diana.prince@example.com'),
+(5, 'Evan Wright', '555-0105', 'evan.wright@example.com')
+ON DUPLICATE KEY UPDATE name=VALUES(name), phone=VALUES(phone), email=VALUES(email);
