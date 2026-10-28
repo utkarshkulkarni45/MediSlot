@@ -1,7 +1,6 @@
 // API Configuration
-// For local development: "http://localhost:8080"
-// For production: replace with your Render backend URL (e.g. "https://medislot-api.onrender.com")
+// Pointing to your live deployed Render backend
 const CONFIG = {
-  API_BASE_URL: "http://localhost:8080"
+  API_BASE_URL: "https://medislot-api-guw0.onrender.com"
 };
 
