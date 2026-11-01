@@ -58,9 +58,10 @@ function hideConnectionNotice() {
 async function loadDoctors() {
   const select = document.getElementById("doctorSelect");
   try {
-    const res = await fetch(`${CONFIG.API_BASE_URL}/doctors`);
+    const res = await fetch(`${CONFIG.API_BASE_URL}/doctors?size=200`);
     if (!res.ok) throw new Error("Failed to load doctor directory");
-    doctorsList = await res.json();
+    const page = await res.json();
+    doctorsList = page.content;
     hideConnectionNotice();
 
     if (doctorsList.length === 0) {

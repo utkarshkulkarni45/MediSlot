@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/utkarshkulkarni45/MediSlot/actions/workflows/ci.yml/badge.svg)](https://github.com/utkarshkulkarni45/MediSlot/actions/workflows/ci.yml)
 
-MediSlot is a Spring Boot 3 REST backend with a clinic day sheet frontend that allows patients to book appointment slots with doctors. It addresses the real-world race condition problem where simultaneous booking requests could result in double-booking.
+MediSlot is a Spring Boot REST API with a clinic day-sheet frontend that prevents double-booking with pessimistic locking plus a database unique-constraint safety net.
 
 ---
 
@@ -55,10 +55,11 @@ MediSlot is a Spring Boot 3 REST backend with a clinic day sheet frontend that a
 
 ## 🛠️ Tech Stack
 
-- **Java 17** (pinned in `pom.xml` and the Dockerfile)
-- **Spring Boot 3.2.5** (Web, Data JPA, Validation)
+- **Java 21** (pinned in `pom.xml` and the Dockerfile)
+- **Spring Boot 4.1.2** (Web, Data JPA, Validation, Actuator)
 - **MySQL 8** (Runtime) & **H2 Database** (fast integration tests)
-- **Testcontainers** (MySQL 8 concurrency test)
+- **Testcontainers 2** (MySQL 8 concurrency test)
+- **springdoc OpenAPI** (Swagger UI)
 - **Project Lombok** & **Jakarta Bean Validation**
 - **JUnit 5, Mockito & AssertJ**
 
@@ -67,7 +68,7 @@ MediSlot is a Spring Boot 3 REST backend with a clinic day sheet frontend that a
 ## 🏗️ Architecture & Package Structure
 
 ```
-com.example.medislot
+com.utkarsh.medislot
  ├── controller          # HTTP REST API layer (DTO in, DTO out)
  │    ├── AppointmentController.java
  │    ├── DoctorController.java
@@ -98,7 +99,7 @@ com.example.medislot
 ## 🚀 Setup & Running Locally
 
 ### Prerequisites
-- JDK 17 (`java -version`)
+- JDK 21 (`java -version`)
 - Maven 3.8+ (`mvn -v`)
 - MySQL Server (optional; tests use H2, plus Docker for the MySQL Testcontainers test)
 
@@ -116,6 +117,7 @@ set DB_URL=jdbc:mysql://localhost:3306/medislot?createDatabaseIfNotExist=true&us
 set DB_USERNAME=root
 set DB_PASSWORD=your_password
 set APP_ZONE_ID=Asia/Kolkata
+set PORT=8080
 ```
 
 > On macOS/Linux use `export` instead of `set`. In production these are `SPRING_DATASOURCE_URL`, `SPRING_DATASOURCE_USERNAME`, and `SPRING_DATASOURCE_PASSWORD` (see `application-prod.properties`).
@@ -148,11 +150,12 @@ curl -X POST http://localhost:8080/doctors \
   }'
 ```
 
-### 2. List Doctors
-`GET /doctors`
+### 2. List Doctors (paginated)
+`GET /doctors?page=0&size=20`
 ```bash
-curl http://localhost:8080/doctors
+curl "http://localhost:8080/doctors?page=0&size=20"
 ```
+Returns a Spring `Page` (`content`, `totalElements`, `totalPages`, `number`, `size`). Defaults are page `0`, size `20`, sorted by name.
 
 ### 3. Add Working Schedule for a Doctor
 `POST /doctors/{id}/schedules`
@@ -207,6 +210,14 @@ curl -X PUT http://localhost:8080/appointments/1/cancel
 ```bash
 curl http://localhost:8080/patients/1/appointments
 ```
+
+---
+
+## 📘 API Docs & Health
+
+- **Swagger UI:** [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
+- **OpenAPI JSON:** `GET /v3/api-docs`
+- **Health check:** `GET /actuator/health`
 
 ---
 
@@ -337,14 +348,20 @@ The H2 run covers application logic; the MySQL run is the one that exercises Inn
 - No rate limiting, so the public demo can be spammed.
 - No email or SMS notifications.
 - The schema is created by Hibernate `ddl-auto`, not by versioned migrations.
-- `GET /doctors` is unpaginated, and patient email/phone are not unique.
+- Patient email is unique, but phone numbers are not.
 - Doctor schedules for the same weekday overwrite each other; overlapping blocks are not rejected.
 - Free-tier hosting cold-starts after 15 minutes idle.
 
 **Roadmap**
 - Spring Security with JWT and `PATIENT` / `DOCTOR` / `ADMIN` roles, taking the patient identity from the token rather than the request body.
 - Flyway migrations, including the nullable `active_status` unique constraint as explicit SQL.
-- Pagination, unique patient contact fields, and schedule overlap validation.
+- Schedule overlap validation and unique phone numbers.
 - Rate limiting and appointment reminders.
+
+---
+
+## 📄 License
+
+MIT. See [LICENSE](LICENSE).
 
 

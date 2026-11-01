@@ -18,3 +18,12 @@ app:
   allowed-origin: ${APP_ALLOWED_ORIGIN:*}
   zone-id: ${APP_ZONE_ID:Asia/Kolkata}
 
+server:
+  port: ${PORT:8080}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+
