@@ -11,6 +11,7 @@ import com.example.medislot.repository.DoctorScheduleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.Clock;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -26,6 +27,11 @@ public class SlotGeneratorService {
 
     private final DoctorScheduleRepository doctorScheduleRepository;
     private final AppointmentRepository appointmentRepository;
+    private final Clock clock;
+
+    public List<SlotDto> generateAvailableSlots(Doctor doctor, LocalDate date) {
+        return generateAvailableSlots(doctor, date, LocalDateTime.now(clock));
+    }
 
     /**
      * Generates all available slots for a doctor on a specific date.

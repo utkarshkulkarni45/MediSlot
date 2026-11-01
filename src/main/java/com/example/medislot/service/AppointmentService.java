@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Clock;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -28,6 +29,7 @@ public class AppointmentService {
     private final DoctorService doctorService;
     private final PatientService patientService;
     private final SlotGeneratorService slotGeneratorService;
+    private final Clock clock;
 
     /**
      * Concurrency Control:
@@ -36,13 +38,13 @@ public class AppointmentService {
      * 2. Issues a PESSIMISTIC_WRITE lock (SELECT ... FOR UPDATE) via findConflictingBookingWithLock().
      *    - If an active booking exists, immediately throws SlotAlreadyBookedException.
      * 3. Persists the new appointment.
-     * 4. As an ultimate safety net, the database unique constraint on (doctor_id, slot_start)
-     *    prevents race conditions if parallel threads simultaneously pass read checks on empty rows.
+     * 4. As an ultimate safety net, the database unique constraint on (doctor_id, slot_start, active_status)
+     *    prevents duplicate inserts if parallel threads simultaneously pass read checks on empty rows.
      */
     @Transactional
     public AppointmentResponse bookAppointment(BookAppointmentRequest request) {
         LocalDateTime slotStart = request.getSlotStart();
-        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime now = LocalDateTime.now(clock);
 
         // 1. Validate slot is not in past
         if (slotStart.isBefore(now)) {
