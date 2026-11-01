@@ -23,7 +23,7 @@ MediSlot is a Spring Boot REST API with a clinic day-sheet frontend that prevent
 
 [![MediSlot clinic day sheet demo](docs/media/medislot-demo.gif)](docs/media/medislot-demo.mp4)
 
-*Click the preview above for the full recording ([medislot-demo.mp4](docs/media/medislot-demo.mp4), 27 MB).*
+*The preview above is a downscaled 5 MB GIF so GitHub can render it inline. Click it for the full 30-second recording ([medislot-demo.mp4](docs/media/medislot-demo.mp4), 27 MB).*
 
 ---
 
