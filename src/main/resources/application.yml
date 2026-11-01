@@ -2,9 +2,9 @@ spring:
   application:
     name: medislot
   datasource:
-    url: jdbc:mysql://localhost:3306/medislot?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC
-    username: root
-    password: password
+    url: ${DB_URL:jdbc:mysql://localhost:3306/medislot?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC}
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:}
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
@@ -15,5 +15,6 @@ spring:
         format_sql: true
 
 app:
-  allowed-origin: "*"
+  allowed-origin: ${APP_ALLOWED_ORIGIN:*}
+  zone-id: ${APP_ZONE_ID:Asia/Kolkata}
 

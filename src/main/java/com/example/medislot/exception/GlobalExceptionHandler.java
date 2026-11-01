@@ -3,6 +3,7 @@ package com.example.medislot.exception;
 import com.example.medislot.dto.ErrorResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.PessimisticLockingFailureException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -32,6 +33,19 @@ public class GlobalExceptionHandler {
             HttpServletRequest request
     ) {
         return buildResponse(HttpStatus.CONFLICT, ex.getMessage(), request.getRequestURI());
+    }
+
+    // 409: Lock timeout or deadlock victim on a contended slot (MySQL InnoDB)
+    @ExceptionHandler(PessimisticLockingFailureException.class)
+    public ResponseEntity<ErrorResponse> handlePessimisticLockFailure(
+            PessimisticLockingFailureException ex,
+            HttpServletRequest request
+    ) {
+        return buildResponse(
+                HttpStatus.CONFLICT,
+                "Another request is booking this slot right now, please retry",
+                request.getRequestURI()
+        );
     }
 
     // 409: Database unique constraint fallback (safety net triggered)

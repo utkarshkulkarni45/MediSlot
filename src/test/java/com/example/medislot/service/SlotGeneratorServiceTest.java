@@ -12,14 +12,16 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.Clock;
 import java.time.DayOfWeek;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZoneOffset;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -40,7 +42,6 @@ class SlotGeneratorServiceTest {
     @Mock
     private AppointmentRepository appointmentRepository;
 
-    @InjectMocks
     private SlotGeneratorService slotGeneratorService;
 
     private Doctor doctor;
@@ -66,6 +67,10 @@ class SlotGeneratorServiceTest {
                 .startTime(LocalTime.of(9, 0))
                 .endTime(LocalTime.of(13, 0)) // 4 hours -> 8 slots of 30 mins
                 .build();
+
+        // Fixed clinic clock at 10:15 on the target date
+        Clock clock = Clock.fixed(Instant.parse("2026-11-02T10:15:00Z"), ZoneOffset.UTC);
+        slotGeneratorService = new SlotGeneratorService(doctorScheduleRepository, appointmentRepository, clock);
     }
 
     @Test
@@ -120,6 +125,20 @@ class SlotGeneratorServiceTest {
         List<SlotDto> slots = slotGeneratorService.generateAvailableSlots(doctor, targetDate, currentTime);
 
         // 8 total slots minus 3 past slots (09:00, 09:30, 10:00) = 5 remaining
+        assertEquals(5, slots.size());
+        assertEquals(LocalDateTime.of(2026, 11, 2, 10, 30), slots.get(0).getStart());
+    }
+
+    @Test
+    @DisplayName("Injected Clock: overload without an explicit now uses the clinic clock (10:15)")
+    void testGenerateSlots_UsesInjectedClock() {
+        when(doctorScheduleRepository.findByDoctorIdAndDayOfWeek(doctor.getId(), DayOfWeek.MONDAY))
+                .thenReturn(Optional.of(schedule));
+        when(appointmentRepository.findByDoctorIdAndStatusAndSlotStartBetween(eq(doctor.getId()), eq(AppointmentStatus.BOOKED), any(), any()))
+                .thenReturn(Collections.emptyList());
+
+        List<SlotDto> slots = slotGeneratorService.generateAvailableSlots(doctor, targetDate);
+
         assertEquals(5, slots.size());
         assertEquals(LocalDateTime.of(2026, 11, 2, 10, 30), slots.get(0).getStart());
     }

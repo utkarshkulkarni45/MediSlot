@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -59,7 +58,7 @@ public class DoctorController {
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
     ) {
         Doctor doctor = doctorService.getDoctorEntity(id);
-        List<SlotDto> slots = slotGeneratorService.generateAvailableSlots(doctor, date, LocalDateTime.now());
+        List<SlotDto> slots = slotGeneratorService.generateAvailableSlots(doctor, date);
         return ResponseEntity.ok(slots);
     }
 }
